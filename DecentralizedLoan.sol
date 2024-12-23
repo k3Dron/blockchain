@@ -83,8 +83,8 @@ contract DecentralizedLoan {
         //require(block.timestamp <= loan.validity, "Validity of loan has already expired");
         require(!loan.repaid, "Loan has already been repayed.");
         require(msg.value == loan.repaymentAmount, "Incorrect repayment amount.");
-        payable(loan.provider).transfer(loan.repaymentAmount);
         loan.repaid = true;
+        payable(loan.provider).transfer(loan.repaymentAmount);
         collaterals[loan.provider][_loanId] -= loan.collateral;
         balances[msg.sender][_loanId] += loan.collateral;
         emit LoanRepaid(_loanId, msg.sender, msg.value);
